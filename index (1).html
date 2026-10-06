@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heba Sleiman — AI/ML Engineering</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:        #12151a;
+    --bg-panel:  #191d24;
+    --line:      #2a303a;
+    --ink:       #ece8de;
+    --ink-dim:   #9aa0ab;
+    --amber:     #d98e3f;
+    --teal:      #4fa88f;
+    --radius:    3px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  a{ color:inherit; }
+  p{ margin:0; color:var(--ink-dim); max-width:62ch; }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:56px;
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky;
+    top:64px;
+    align-self:start;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    padding-top:8px;
+  }
+  nav a{
+    font-size:14px;
+    color:var(--ink-dim);
+    text-decoration:none;
+    border-left:2px solid transparent;
+    padding-left:12px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav a:hover, nav a.active{
+    color:var(--ink);
+    border-left-color:var(--amber);
+  }
+  .nav-name{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:17px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+
+  /* ---------- Header bar (mobile) ---------- */
+  .topbar{ display:none; }
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:48px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:44px;
+    line-height:1.15;
+    max-width:14ch;
+  }
+  .hero p.lede{
+    margin-top:22px;
+    font-size:17px;
+    max-width:46ch;
+    color:var(--ink-dim);
+  }
+  .hero .meta{
+    margin-top:28px;
+    font-size:13px;
+    color:var(--ink-dim);
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .hero .meta span{ color:var(--ink); }
+  .cta-row{
+    margin-top:34px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-block;
+    padding:11px 20px;
+    font-size:14px;
+    font-family:'Inter', sans-serif;
+    font-weight:500;
+    text-decoration:none;
+    border-radius:var(--radius);
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-primary{ background:var(--amber); color:#171310; }
+  .btn-ghost{ border:1px solid var(--line); color:var(--ink); }
+
+  /* ---------- Hero diagram ---------- */
+  .diagram-box{
+    aspect-ratio:1/1;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--bg-panel);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .diagram-box svg{ width:100%; height:100%; }
+  .joint{ fill:var(--teal); }
+  .bone{ stroke:var(--ink-dim); stroke-width:2; fill:none; }
+  .angle-arc{ stroke:var(--amber); stroke-width:2; fill:none; }
+  .angle-label{ font-family:'Inter',sans-serif; font-size:9px; fill:var(--amber); }
+  @keyframes sweep{
+    from{ stroke-dashoffset:120; }
+    to{ stroke-dashoffset:0; }
+  }
+  .angle-arc{
+    stroke-dasharray:120;
+    stroke-dashoffset:120;
+    animation:sweep 1.8s ease forwards .4s;
+  }
+  @media (prefers-reduced-motion:reduce){
+    .angle-arc{ animation:none; stroke-dashoffset:0; }
+  }
+
+  /* ---------- Sections ---------- */
+  section{
+    padding:72px 0;
+    border-bottom:1px solid var(--line);
+    scroll-margin-top:48px;
+  }
+  section:last-of-type{ border-bottom:none; }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:24px;
+    margin-bottom:36px;
+  }
+  .section-head h2{ font-size:24px; }
+  .section-head .count{ font-size:13px; color:var(--ink-dim); }
+
+  /* ---------- Featured project ---------- */
+  .feature{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:48px;
+  }
+  .feature .stack-line{
+    margin-top:6px;
+    font-size:13px;
+    color:var(--teal);
+  }
+  .feature ul{
+    margin:20px 0 0;
+    padding:0;
+    list-style:none;
+  }
+  .feature li{
+    position:relative;
+    padding-left:18px;
+    margin-bottom:14px;
+    color:var(--ink-dim);
+    font-size:15px;
+    max-width:52ch;
+  }
+  .feature li::before{
+    content:"";
+    position:absolute;
+    left:0; top:9px;
+    width:6px; height:1px;
+    background:var(--amber);
+  }
+  .pipeline{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--bg-panel);
+    padding:22px;
+  }
+  .pipeline-step{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:12px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:13.5px;
+  }
+  .pipeline-step:last-child{ border-bottom:none; }
+  .pipeline-step .idx{
+    color:var(--amber);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:13px;
+    flex-shrink:0;
+    width:18px;
+  }
+  .pipeline-step .body strong{ color:var(--ink); display:block; margin-bottom:2px; font-weight:500;}
+  .pipeline-step .body span{ color:var(--ink-dim); font-size:13px; }
+
+  /* ---------- Project rows ---------- */
+  .proj-row{
+    display:grid;
+    grid-template-columns:1fr 240px;
+    gap:32px;
+    padding:28px 0;
+    border-top:1px solid var(--line);
+  }
+  .proj-row:first-child{ border-top:none; }
+  .proj-row h3{ font-size:19px; margin-bottom:8px; }
+  .proj-row a.repo{
+    display:inline-block;
+    margin-top:10px;
+    font-size:13px;
+    color:var(--teal);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+  .proj-row a.repo:hover{ border-bottom-color:var(--teal); }
+  .tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-content:flex-start;
+    justify-content:flex-end;
+  }
+  .tag{
+    font-size:12px;
+    color:var(--ink-dim);
+    border:1px solid var(--line);
+    padding:4px 9px;
+    border-radius:var(--radius);
+    height:fit-content;
+  }
+
+  /* ---------- Publication ---------- */
+  .pub{
+    border-left:2px solid var(--teal);
+    padding-left:24px;
+  }
+  .pub h3{ font-size:19px; max-width:38ch; line-height:1.35; }
+  .pub .venue{ font-size:14px; color:var(--teal); margin-top:8px; display:block; }
+  .pub .authors{ font-size:13px; color:var(--ink-dim); margin-top:4px; display:block; }
+  .pub p{ margin-top:16px; }
+
+  /* ---------- Experience ---------- */
+  .exp-row{ display:grid; grid-template-columns:140px 1fr; gap:32px; }
+  .exp-date{ font-size:13px; color:var(--ink-dim); padding-top:3px; }
+  .exp-row h3{ font-size:18px; }
+  .exp-row .place{ font-size:14px; color:var(--teal); margin-top:4px; display:block; }
+  .exp-row ul{ margin:16px 0 0; padding-left:18px; color:var(--ink-dim); font-size:14.5px; }
+  .exp-row li{ margin-bottom:8px; }
+
+  /* ---------- Skills ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:28px 48px;
+  }
+  .skill-group h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14px;
+    font-weight:500;
+    color:var(--amber);
+    margin-bottom:10px;
+  }
+  .skill-group p{ font-size:14.5px; color:var(--ink-dim); max-width:none; }
+
+  /* ---------- Education ---------- */
+  .edu-row{ display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  .edu-item h3{ font-size:16px; }
+  .edu-item .school{ font-size:14px; color:var(--teal); margin-top:4px; display:block; }
+  .edu-item .date{ font-size:13px; color:var(--ink-dim); margin-top:4px; display:block; }
+
+  /* ---------- Footer ---------- */
+  footer{ padding:64px 0 56px; }
+  footer h2{ font-size:26px; max-width:16ch; }
+  .contact-links{
+    margin-top:26px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .contact-links a{
+    text-decoration:none;
+    font-size:15px;
+    color:var(--ink-dim);
+    width:fit-content;
+    border-bottom:1px solid transparent;
+  }
+  .contact-links a:hover{ color:var(--ink); border-bottom-color:var(--amber); }
+  .foot-note{ margin-top:48px; font-size:12.5px; color:#565c66; }
+
+  @media (max-width:860px){
+    .grid{ grid-template-columns:1fr; }
+    nav{ display:none; }
+    .topbar{
+      display:flex;
+      gap:16px;
+      overflow-x:auto;
+      position:sticky;
+      top:0;
+      background:var(--bg);
+      padding:16px 32px;
+      border-bottom:1px solid var(--line);
+      z-index:10;
+    }
+    .topbar a{ font-size:13px; color:var(--ink-dim); text-decoration:none; white-space:nowrap; }
+    .hero-grid, .feature{ grid-template-columns:1fr; }
+    .diagram-box{ max-width:280px; margin:0 auto; order:-1; }
+    .proj-row, .exp-row, .edu-row{ grid-template-columns:1fr; }
+    .tags{ justify-content:flex-start; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .hero h1{ font-size:34px; max-width:none; }
+    header.hero{ padding-top:40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="#work">Work</a>
+  <a href="#publication">Publication</a>
+  <a href="#experience">Experience</a>
+  <a href="#skills">Skills</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<div class="wrap grid">
+  <nav>
+    <div class="nav-name">Heba Sleiman</div>
+    <a href="#work">Work</a>
+    <a href="#publication">Publication</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div>
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1>Turning motion into a machine's understanding of risk.</h1>
+          <p class="lede">I build machine-learning systems that close the loop between sensing and action — from a real-time VR ergonomics pipeline to LLM agents with enforced guardrails and adversarial testing.</p>
+          <div class="meta">
+            <span>Grenoble, France</span>
+            <span>M2 MoSIG · AI specialization, Univ. Grenoble Alpes</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#work">View work</a>
+            <a class="btn btn-ghost" href="cv.pdf" download="Heba_Sleiman_CV.pdf">Download CV</a>
+            <a class="btn btn-ghost" href="mailto:hibasleiman99@outlook.com">Get in touch</a>
+          </div>
+        </div>
+        <div class="diagram-box" aria-hidden="true">
+          <svg viewBox="0 0 220 220">
+            <!-- upper arm -->
+            <line class="bone" x1="70" y1="50" x2="110" y2="110"/>
+            <!-- forearm -->
+            <line class="bone" x1="110" y1="110" x2="90" y2="175"/>
+            <!-- joints -->
+            <circle class="joint" cx="70" cy="50" r="5"/>
+            <circle class="joint" cx="110" cy="110" r="6"/>
+            <circle class="joint" cx="90" cy="175" r="5"/>
+            <!-- angle arc at elbow -->
+            <path class="angle-arc" d="M 110 90 A 20 20 0 0 1 128 118" />
+            <text class="angle-label" x="134" y="118">62°</text>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <section id="work">
+      <div class="section-head">
+        <h2>Featured project</h2>
+        <span class="count">G-SCOP Lab, Univ. Grenoble Alpes</span>
+      </div>
+
+      <div class="feature">
+        <div>
+          <h3>Real-time ergonomic risk assessment in VR (RULA)</h3>
+          <p>Master's research internship at the G-SCOP laboratory, supervised by Dr. Mathieu Delangle. Traditional ergonomic assessment can't monitor a worker continuously — this system watches posture in real time inside an immersive VR workstation and adapts it the moment a risky posture is detected, designed as a support tool for ergonomists and workstation designers rather than a replacement for their expertise.</p>
+          <p class="stack-line">Python · scikit-learn · Unreal Engine 5 · OptiTrack · TCP sockets</p>
+          <ul>
+            <li>Built a dataset of 19,332 labeled samples from OptiTrack and Meta Quest motion capture, computing six joint angles per side in Unreal Engine and labeling each sample automatically with a rule-based function adapted from the RULA method.</li>
+            <li>Trained and compared Random Forest and SVM classifiers to predict risk level (low, medium, high); the Random Forest reached 96.5% test accuracy with stronger recall on high-risk postures — the metric that matters when a missed detection means an unaddressed injury risk — and was deployed live through a TCP server.</li>
+            <li>Visualized predicted risk in real time through skeleton coloring and an overhead risk sphere, then closed the loop as a proof of concept: the workstation's table height rises automatically the moment a high-risk left-shoulder posture is detected.</li>
+          </ul>
+        </div>
+
+        <div class="pipeline">
+          <div class="pipeline-step">
+            <span class="idx">01</span>
+            <div class="body"><strong>Motion capture</strong><span>OptiTrack + Meta Quest track the worker in real time</span></div>
+          </div>
+          <div class="pipeline-step">
+            <span class="idx">02</span>
+            <div class="body"><strong>Joint-angle computation</strong><span>Unreal Engine 5 derives joint angles from tracked markers</span></div>
+          </div>
+          <div class="pipeline-step">
+            <span class="idx">03</span>
+            <div class="body"><strong>Labeled dataset</strong><span>19,332 samples, auto-labeled by a RULA-adapted rule-based function</span></div>
+          </div>
+          <div class="pipeline-step">
+            <span class="idx">04</span>
+            <div class="body"><strong>Classifier served over TCP</strong><span>Random Forest, 96.5% test accuracy, scores posture risk live</span></div>
+          </div>
+          <div class="pipeline-step">
+            <span class="idx">05</span>
+            <div class="body"><strong>Adaptation</strong><span>Skeleton coloring, an overhead risk sphere, and auto table-height adjustment</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Other projects</h2>
+        <span class="count">04</span>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <h3>Resume-to-JD matching agent</h3>
+          <p>An LLM pipeline that uses Claude tool-use to extract structured candidate profiles from resume PDFs and score them against a job description. A bias-audit module re-scores candidates with demographic signals swapped and flags any score drift, backed by an eval harness for probabilistic LLM output. Deployed publicly on Render with a Streamlit interface.</p>
+          <a class="repo" href="https://github.com/hibasoleiman/resume-matcher" target="_blank" rel="noopener">github.com/hibasoleiman/resume-matcher</a>
+        </div>
+        <div class="tags">
+          <span class="tag">Claude API</span>
+          <span class="tag">Pydantic</span>
+          <span class="tag">Streamlit</span>
+          <span class="tag">Render</span>
+        </div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <h3>Tasklet — support agent</h3>
+          <p>A multi-turn conversational support agent built on Claude tool-use, with per-user data scoping enforced at the service layer rather than trusted to the LLM. Validated under adversarial red-teaming — jailbreak attempts, fabricated authority, injected fake instructions — to confirm the refusal behavior held under pressure.</p>
+          <a class="repo" href="https://github.com/hibasoleiman/tasklet-project" target="_blank" rel="noopener">github.com/hibasoleiman/tasklet-project</a>
+        </div>
+        <div class="tags">
+          <span class="tag">Claude API</span>
+          <span class="tag">SQLite</span>
+          <span class="tag">Red-teaming</span>
+        </div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <h3>Financial sentiment classification with DistilBERT</h3>
+          <p>Classifying financial news sentences as positive, negative or neutral from an investor's point of view, on an imbalanced dataset of 3.4k sentences where only 12% are negative. A frozen DistilBERT encoder did no better than a TF-IDF + Naive Bayes baseline: its confusion matrix showed it caught just 1 of 84 negative sentences, mostly mistaking them for positive ones. Fine-tuning the full encoder with a low learning rate raised accuracy from 0.74 to 0.94 and macro-F1 from 0.60 to 0.93, with 93% recall on the negative class. Course project, M2 MoSIG.</p>
+          <a class="repo" href="https://github.com/hibasoleiman/financial-sentiment-distilbert" target="_blank" rel="noopener">github.com/hibasoleiman/financial-sentiment-distilbert</a>
+        </div>
+        <div class="tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">HuggingFace</span>
+          <span class="tag">DistilBERT</span>
+          <span class="tag">NLP</span>
+        </div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <h3>COMPAS fairness analysis</h3>
+          <p>An audit of racial and gender bias in the ProPublica COMPAS recidivism dataset — computing PPV, FPR, and FNR alongside calibration curves across demographic groups to diagnose the trade-off between calibration and equalized odds. Four self-trained classifiers were benchmarked against the COMPAS score to test whether the same fairness gaps persisted.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">pandas</span>
+          <span class="tag">scikit-learn</span>
+          <span class="tag">Fairness metrics</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="publication">
+      <div class="section-head">
+        <h2>Publication</h2>
+      </div>
+      <div class="pub">
+        <h3>Numerical Solutions of the Nonlinear Poliovirus Model: A Radial Basis Dual Layered Neural Network Approach</h3>
+        <span class="venue">Biomedical Signal Processing and Control, 2025</span>
+        <span class="authors">with Dr. Zulqurnain Sabir, M. A. Abdelkawy, and Fatima Hassouna</span>
+        <p>Co-developed a dual-layer radial basis function neural network — 18 and 34 neurons, trained via Bayesian regularization — to numerically solve a nonlinear four-compartment poliovirus transmission model, then validated solver accuracy against a Runge-Kutta-generated dataset using error histograms, regression coefficients, and training-performance diagnostics.</p>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-head">
+        <h2>Experience</h2>
+      </div>
+      <div class="exp-row">
+        <div class="exp-date">Jan – Jun 2026</div>
+        <div>
+          <h3>Master's Research Intern — Real-Time Ergonomic Adaptation in VR</h3>
+          <span class="place">G-SCOP Laboratory, Université Grenoble Alpes — VisionR platform, S.MART</span>
+          <ul>
+            <li>Designed and built an end-to-end system integrating machine learning with virtual reality to detect ergonomic risk in real time and automatically adapt a workstation when high risk is found — a support tool for ergonomists, not an autonomous replacement for their expertise.</li>
+            <li>Delivered a Random Forest classifier reaching 96.5% test accuracy on a self-built 19,332-sample dataset, deployed live through a TCP server with real-time risk visualization.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-row" style="margin-top:36px;">
+        <div class="exp-date">Jul 2024</div>
+        <div>
+          <h3>Software Engineering Intern</h3>
+          <span class="place">simBrAIn Solutions, Beirut, Lebanon</span>
+          <ul>
+            <li>Performed data preprocessing and feature engineering, then developed and integrated ML models into production web applications.</li>
+            <li>Built full-stack features — email routing, real-time notifications, an interactive UI — using ASP.NET MVC and Bootstrap.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="section-head">
+        <h2>Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4>Machine learning</h4>
+          <p>scikit-learn, Random Forest, SVM, Logistic Regression, Gradient Boosting, fairness metrics (PPV, FPR, FNR), calibration analysis, AUC-ROC</p>
+        </div>
+        <div class="skill-group">
+          <h4>Deep learning &amp; NLP</h4>
+          <p>PyTorch, HuggingFace Transformers, BERT/DistilBERT fine-tuning, tokenization, TF-IDF</p>
+        </div>
+        <div class="skill-group">
+          <h4>Generative AI &amp; LLMs</h4>
+          <p>Anthropic Claude API, tool use / function calling, prompt engineering, structured-output validation with Pydantic, LLM evals and red-teaming</p>
+        </div>
+        <div class="skill-group">
+          <h4>Simulation &amp; real-time systems</h4>
+          <p>Unreal Engine 5, OptiTrack motion capture, TCP sockets</p>
+        </div>
+        <div class="skill-group">
+          <h4>Data &amp; visualization</h4>
+          <p>pandas, Tableau, SQLite, Oracle SQL, data modeling</p>
+        </div>
+        <div class="skill-group">
+          <h4>Programming</h4>
+          <p>Python, Java, C, SQL, HTML, CSS, PHP</p>
+        </div>
+        <div class="skill-group">
+          <h4>Tools &amp; deployment</h4>
+          <p>Git/GitHub, Streamlit, Render, ASP.NET MVC</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="section-head">
+        <h2>Education</h2>
+      </div>
+      <div class="edu-row">
+        <div class="edu-item">
+          <h3>M2 MoSIG — Artificial Intelligence specialization</h3>
+          <span class="school">Université Grenoble Alpes / Grenoble INP</span>
+          <span class="date">2026 – 2027 (expected)</span>
+        </div>
+        <div class="edu-item">
+          <h3>B.S. Computer Science, Minor in Data Analytics</h3>
+          <span class="school">Lebanese American University — Graduated with Honors</span>
+          <span class="date">May 2025</span>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <h2>Let's talk.</h2>
+      <p>Currently looking for a six-month AI/ML internship starting February 2027.</p>
+      <div class="contact-links">
+        <a href="mailto:hibasleiman99@outlook.com">hibasleiman99@outlook.com</a>
+        <a href="tel:+33634545519">+33 6 34 54 51 9</a>
+        <a href="https://github.com/hibasoleiman" target="_blank" rel="noopener">github.com/hibasoleiman</a>
+        <a href="https://linkedin.com/in/hiba-sleiman-39646422a" target="_blank" rel="noopener">linkedin.com/in/hiba-sleiman-39646422a</a>
+      </div>
+      <div class="foot-note">Grenoble, France</div>
+    </footer>
+  </div>
+</div>
+
+<script>
+  // Highlight the active nav section on scroll
+  const sections = document.querySelectorAll('section[id], header[class="hero"]');
+  const navLinks = document.querySelectorAll('nav a, .topbar a');
+  const byId = id => document.querySelector('nav a[href="#' + id + '"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = byId(entry.target.id);
+        if(link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+
+  document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
